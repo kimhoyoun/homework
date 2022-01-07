@@ -59,11 +59,16 @@ public class PhoneVo implements Externalizable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Override
+	
+	
+
+	
+@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + no;
 		return result;
 	}
 
@@ -76,14 +81,11 @@ public class PhoneVo implements Externalizable{
 		if (getClass() != obj.getClass())
 			return false;
 		PhoneVo other = (PhoneVo) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		if ((no != other.no)&&(!(name.equals(other.name))))
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return no+"  "+name + "  " + tel + "  " + email;

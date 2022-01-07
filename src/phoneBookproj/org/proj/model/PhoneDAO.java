@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PhoneDAO {
 	public static int no = 1;
@@ -24,7 +25,7 @@ public class PhoneDAO {
 			if (pList.size() != 0) {
 				no = pList.get(pList.size() - 1).getNo() + 1;
 			}
-		}else {
+		} else {
 			pList = new ArrayList<PhoneVo>();
 		}
 
@@ -43,9 +44,8 @@ public class PhoneDAO {
 
 	// 삭제
 	public void delete(PhoneVo vo) {
-		int idx;
 		if (vo != null) {
-			idx = pList.indexOf(vo);
+			int idx = pList.indexOf(vo);
 			pList.remove(idx);
 		}
 
@@ -53,18 +53,18 @@ public class PhoneDAO {
 
 	// 검색
 	public PhoneVo search(PhoneVo vo) {
-		if (vo == null || pList.size()==0) {
+		if (vo == null || pList.size() == 0) {
 			return null;
 		}
-		for (int i = 0; i < pList.size(); i++) {
-			if (pList.get(i).getName().equals(vo.getName())) {
-				PhoneVo p = new PhoneVo();
-				p.setNo(pList.get(i).getNo());
-				p.setName(pList.get(i).getName());
-				p.setTel(pList.get(i).getTel());
-				p.setEmail(pList.get(i).getEmail());
-				return p;
-			}
+		
+		int idx = pList.indexOf(vo);
+		if (idx != -1) {
+			PhoneVo p = new PhoneVo();
+			p.setNo(pList.get(idx).getNo());
+			p.setName(pList.get(idx).getName());
+			p.setTel(pList.get(idx).getTel());
+			p.setEmail(pList.get(idx).getEmail());
+			return p;
 		}
 		return null;
 	}
@@ -72,31 +72,25 @@ public class PhoneDAO {
 	// 출력
 	public ArrayList<PhoneVo> print() {
 		ArrayList<PhoneVo> list = new ArrayList<>();
-		if (pList.size()==0) {
+		if (pList.size() == 0) {
 			return null;
 		}
-		for (int i = 0; i < pList.size(); i++) {
-			PhoneVo p = new PhoneVo();
-			p.setNo(pList.get(i).getNo());
-			p.setName(pList.get(i).getName());
-			p.setTel(pList.get(i).getTel());
-			p.setEmail(pList.get(i).getEmail());
-
+		Iterator<PhoneVo> it = pList.iterator();
+		while (it.hasNext()) {
+			PhoneVo p = it.next();
 			list.add(p);
 		}
+
 		return list;
 	}
 
 	// 수정
 	public void update(PhoneVo vo) {
-		if (vo == null || pList.size()==0) {
+		if (vo == null || pList.size() == 0) {
 			return;
 		}
-		for (int i = 0; i < pList.size(); i++) {
-			if (pList.get(i).getNo() == vo.getNo()) {
-				pList.set(i, vo);
-			}
-		}
+		int idx = pList.indexOf(vo);
+		pList.set(idx, vo);
 	}
 
 	// 저장
